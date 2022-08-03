@@ -1,0 +1,12 @@
+1. Create minikube + docker.
+  1.1 Install minikube.
+  1.2 Install docker.
+2. Create Jenkins deployment to minikube with one pod.
+  2.1 File config jn git: ~/1_infrastructure/deployment.yaml , ~/1_infrastructure/service-account.yaml .
+  2.2 Run kubectl apply -f ./service-account.yaml
+  2.3 Run kubectl apply -f ./deployment.yaml
+  2.4 Watch minikube: minikube dashboard
+  2.5 Configure Jenkins kubectl --namespace devops-tools  port-forward jenkins-deployment-8b4d66c7c-nhmsw 8080:8080
+  2.6 Гseful links:   https://devopscube.com/jenkins-build-agents-kubernetes/   https://www.digitalocean.com/community/tutorials/how-to-install-jenkins-on-kubernetes
+3. Create pipeline for project.
+  
