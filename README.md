@@ -52,3 +52,8 @@ Bonus points:
 
 * Generate and run a test of application to prevent deploy some errors in your environment.
 >>>>>>> 932d7f6 (clone)
+
+links
+
+https://devopscube.com/jenkins-build-agents-kubernetes/
+
