@@ -1,43 +1,39 @@
-pipeline {
-    // install golang 1.14 on Jenkins node
-    agent any
-    tools {
-        go 'go1.14'
-    }
-    environment {
-        GO114MODULE = 'on'
-        CGO_ENABLED = 0 
-        GOPATH = "${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}"
-    }
-    stages {
-        stage("unit-test") {
-            steps {
-                echo 'UNIT TEST EXECUTION STARTED'
-                sh 'make unit-tests'
-            }
-        }
-        stage("functional-test") {
-            steps {
-                echo 'FUNCTIONAL TEST EXECUTION STARTED'
-                sh 'make functional-tests'
-            }
-        }
-        stage("build") {
-            steps {
-                echo 'BUILD EXECUTION STARTED'
-                sh 'go version'
-                sh 'go get ./...'
-                sh 'docker build . -t shadowshotx/product-go-micro'
-            }
-        }
-        stage('deliver') {
-            agent any
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerhubPassword', usernameVariable: 'dockerhubUser')]) {
-                sh "docker login -u ${env.dockerhubUser} -p ${env.dockerhubPassword}"
-                sh 'docker push shadowshotx/product-go-micro'
+podTemplate(containers: [
+    containerTemplate(
+        name: 'maven', 
+        image: 'maven:3.8.1-jdk-8', 
+        command: 'sleep', 
+        args: '30d'
+        ),
+    containerTemplate(
+        name: 'python', 
+        image: 'python:latest', 
+        command: 'sleep', 
+        args: '30d')
+  ]) {
+
+    node(POD_LABEL) {
+        stage('Get a Maven project') {
+            git 'https://github.com/spring-projects/spring-petclinic.git'
+            container('maven') {
+                stage('Build a Maven project') {
+                    sh '''
+                    echo "maven build"
+                    '''
                 }
             }
         }
+
+        stage('Get a Python Project') {
+            git url: 'https://github.com/hashicorp/terraform.git', branch: 'main'
+            container('python') {
+                stage('Build a Go project') {
+                    sh '''
+                    echo "Go Build"
+                    '''
+                }
+            }
+        }
+
     }
 }
