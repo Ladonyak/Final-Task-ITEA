@@ -14,8 +14,8 @@ pipeline {
             command:
             - cat
             tty: true
-          - name: busybox
-            image: busybox
+          - name: golang
+            image: golang:1.16.5
             command:
             - cat
             tty: true
@@ -28,8 +28,8 @@ pipeline {
         container('maven') {
           sh 'mvn -version'
         }
-        container('busybox') {
-          sh '/bin/busybox'
+        container('golang') {
+          sh 'go --verdion'
         }
       }
     }
