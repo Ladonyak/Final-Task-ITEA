@@ -29,7 +29,7 @@ pipeline {
           sh 'mvn -version'
         }
         container('golang') {
-          sh 'go --verdion'
+          sh 'go verdion'
         }
       }
     }
