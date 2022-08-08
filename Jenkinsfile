@@ -1,23 +1,15 @@
 pipeline {
   agent {
     kubernetes {
-      yaml '''
-secretGenerator:
-- name: mysql-pass
-  literals:
-  - password=mysql
-        '''
+      defaultContainer 'maven'
+      yamlFile '1_infrastructure/wordpress/kustomization.yaml'
     }
   }
+
   stages {
     stage('Run maven') {
       steps {
-        container('maven') {
-          sh 'mvn -version'
-        }
-        container('busybox') {
-          sh '/bin/busybox'
-        }
+        sh 'mvn -version'
       }
     }
   }
