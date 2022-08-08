@@ -1,37 +1,37 @@
 podTemplate(containers: [
     containerTemplate(
-        name: 'maven', 
-        image: 'maven:3.8.1-jdk-8', 
+        name: 'golang', 
+        image: 'golang:1.14.2', 
         command: 'sleep', 
         args: '30d'
         ),
-    containerTemplate(
-        name: 'python', 
-        image: 'python:latest', 
-        command: 'sleep', 
-        args: '30d')
+//    containerTemplate(
+//        name: 'python', 
+//       image: 'python:latest', 
+//        command: 'sleep', 
+//        args: '30d')
   ]) {
 
     node(POD_LABEL) {
-        stage('Get a Maven project') {
-            container('maven') {
-                stage('Build a Maven project') {
+        stage('Get a GoLang project') {
+            container('golang') {
+                stage('Build a GoLang project') {
                     sh '''
-                    echo "maven build"
+                    echo "GoLang build"
                     '''
                 }
             }
         }
 
-        stage('Get a Python Project') {
-            container('python') {
-                stage('Build a Go project') {
-                    sh '''
-                    echo "Go Build"
-                    '''
-                }
-            }
-        }
+//        stage('Get a Python Project') {
+//            container('python') {
+//                stage('Build a Go project') {
+//                   sh '''
+//                    echo "Go Build"
+//                    '''
+//                }
+//            }
+//        }
 
     }
 }
