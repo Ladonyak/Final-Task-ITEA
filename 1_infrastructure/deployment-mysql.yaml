@@ -1,0 +1,43 @@
+# Deployment Config
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+  namespace: devops-tools
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-deployment
+  template:
+    metadata:
+      labels:
+        app: mysql-deployment
+    spec:
+      serviceAccountName: jenkins-admin
+      securityContext:
+            fsGroup: 1000
+            runAsUser: 1000
+      volumes:
+            - name: jenkins-data
+              persistentVolumeClaim:
+                claimName: jenkins-pv-claim
+      containers:
+        - name: mysql-container
+          image: mysql:5.7
+          env:
+          - name: MYSQL_DATABASE
+            value: "exampledb"
+          - name: MYSQL_USER
+            value: "exampleuser"
+          - name: MYSQL_PASSWORD
+            value: "examplepass"
+          - name: MYSQL_RANDOM_ROOT_PASSWORD
+            value: "1"
+          ports:
+            - name: mysqlport
+              containerPort: 3306
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: jenkins-data

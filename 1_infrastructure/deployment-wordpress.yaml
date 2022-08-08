@@ -3,17 +3,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: wordpress-mysql-deployment
+  name: wordpress-deployment
   namespace: devops-tools
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: wordpress-mysql-deployment
+      app: wordpress-deployment
   template:
     metadata:
       labels:
-        app: wordpress-mysql-deployment
+        app: wordpress-deployment
     spec:
       serviceAccountName: jenkins-admin
       securityContext:
@@ -25,7 +25,7 @@ spec:
                 claimName: jenkins-pv-claim
       containers:
         - name: wordpress-container
-          image: wordpress:php8.1-fpm
+          image: wordpress:php8.1-fpm-alpine
           env:
           - name: WORDPRESS_DB_HOST
             value: "db"
@@ -37,7 +37,7 @@ spec:
             value: "exampledb"
           ports:
             - name: wordport
-              containerPort: 8081
+              containerPort: 80
 #          livenessProbe:
 #            httpGet:
 #              path: "/login"
@@ -57,28 +57,6 @@ spec:
           volumeMounts:
             - mountPath: /var/www/html
               name: jenkins-data
-        - name: php-fpm
-          image: otezvikentiy/php7.2-fpm:0.0.12
-          volumeMounts:
-            - mountPath: /var/lib/php7.2-fpm
-              name: jenkins-data
-        - name: mysql-container
-          image: mysql:5.7
-          env:
-          - name: MYSQL_DATABASE
-            value: "exampledb"
-          - name: MYSQL_USER
-            value: "exampleuser"
-          - name: MYSQL_PASSWORD
-            value: "examplepass"
-          - name: MYSQL_RANDOM_ROOT_PASSWORD
-            value: "1"
-          ports:
-            - name: mysqlport
-              containerPort: 3306
-          volumeMounts:
-            - mountPath: /var/lib/mysql
-              name: jenkins-data
 # Service Config
 ---
 apiVersion: v1
@@ -89,20 +67,13 @@ metadata:
   annotations:
       prometheus.io/scrape: 'true'
       prometheus.io/path:   /
-      prometheus.io/port:   '8081'
+      prometheus.io/port:   '80'
 spec:
   selector: 
-    app: wordpress-mysql-deployment
+    app: wordpress-deployment
   type: NodePort  
   ports:
     - name: wordport
       port: 8081
-      targetPort: 8081
+      targetPort: 80
       nodePort: 32001
-    - name: jnlp-port
-      port: 50001
-      targetPort: 50001
-    - name: mysqlport
-      port: 3306
-      targetPort: 3306
-      nodePort: 32002
