@@ -34,14 +34,24 @@ pipeline {
         }
       }
     }
+    stage('Install Git') {
+      steps {
+        container('golang') {
+          sh '''
+          apt update
+          apt install git
+          '''
+        }
+      }
+    }
     stage('Get a Golang project') {
-      git 'https://github.com/Ladonyak/Final-Task-ITEA.git'
       container('golang') {
         stage('Build a Go project') {
           sh '''
           mkdir -p /go/src/github.com
-          ln -s `pwd` /go/src/github.com
-          cd /go/src/github.com && go ./2_application/server.go
+          cd /go/src/github.com
+          git 'https://github.com/Ladonyak/Final-Task-ITEA.git'
+          go ./2_application/server.go
           '''
         }
       }
