@@ -34,16 +34,16 @@ pipeline {
         }
       }
     }
-  }
-  stage('Get a Golang project') {
-    git url: 'https://github.com/Ladonyak/Final-Task-ITEA.git', branch: 'main'
-    container('golang') {
-      stage('Build a Go project') {
-        sh '''
-        mkdir -p /go/src/github.com
-        ln -s `pwd` /go/src/github.com
-        cd /go/src/github.com && go ./2_application/server.go
-        '''
+    stage('Get a Golang project') {
+      git url: 'https://github.com/Ladonyak/Final-Task-ITEA.git', branch: 'main'
+      container('golang') {
+        stage('Build a Go project') {
+          sh '''
+          mkdir -p /go/src/github.com
+          ln -s `pwd` /go/src/github.com
+          cd /go/src/github.com && go ./2_application/server.go
+          '''
+        }
       }
     }
   }
