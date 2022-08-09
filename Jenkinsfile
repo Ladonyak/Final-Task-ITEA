@@ -62,7 +62,7 @@ pipeline {
       steps {
         container('golang') {
              sh '''
-             go run ./Final-Task-ITEA/2_application/server.go
+             go run /go/src/github.com/Final-Task-ITEA/2_application/server.go
              '''
         }
       }
