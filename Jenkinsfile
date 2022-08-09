@@ -50,7 +50,7 @@ pipeline {
              sh '''
              mkdir -p /go/src/github.com
              cd /go/src/github.com
-             git pull 'https://github.com/Ladonyak/Final-Task-ITEA.git', branch: 'main'
+             git clone 'https://github.com/Ladonyak/Final-Task-ITEA.git'
              go ./2_application/server.go
              '''
         }
