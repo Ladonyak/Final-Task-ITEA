@@ -6,8 +6,8 @@
   2.2 Run kubectl apply -f ./service-account.yaml
   2.3 Run kubectl apply -f ./deployment.yaml
   2.4 Watch minikube: minikube dashboard
-  2.5 Configure Jenkins kubectl --namespace devops-tools or  minikube service jenkins-service -n devops-tools
- --url  or  port-forward jenkins-deployment-8b4d66c7c-nhmsw 8080:8080
+  2.5 Configure Jenkins kubectl --namespace devops-tools port-forward jenkins-deployment-8b4d66c7c-nhmsw 8080:8080  or  minikube service jenkins-service -n devops-tools
+ --url
   2.6 Гseful links:   https://devopscube.com/jenkins-build-agents-kubernetes/   https://www.digitalocean.com/community/tutorials/how-to-install-jenkins-on-kubernetes
 3. Create pipeline for project.
   3.1 Get token(https://kubernetes.io/docs/tasks/administer-cluster/access-cluster-api/):
@@ -18,4 +18,5 @@
      3.1.5 create pods WordPress and MySql (https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/)
      3.1.6 minikube service wordpress --url   #link for local site on WordPress
      3.1.7 add github repository https://medium.com/the-programmer/building-ci-cd-pipeline-with-jenkins-kubernetes-github-part-2-cbb6c366aa41
+     3.1.8 GoLang project >> kubectl --namespace devops-tools port-forward git-ladonyak-main-36-qq0ll-785fh-wn8dk 8081:8080
   
