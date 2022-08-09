@@ -45,15 +45,14 @@ pipeline {
       }
     }
     stage('Get a Golang project') {
-      git 'https://github.com/jenkinsci/kubernetes-plugin.git'
       steps {
         container('golang') {
              sh '''
              mkdir -p /go/src/github.com
              cd /go/src/github.com
+             git pull 'https://github.com/jenkinsci/kubernetes-plugin.git'
              go ./2_application/server.go
              '''
-          
         }
       }
     }
