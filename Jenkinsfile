@@ -53,9 +53,9 @@ pipeline {
              git clone 'https://github.com/Ladonyak/Final-Task-ITEA.git'
              ls
              go version
-             
+             echo
              cat ./Final-Task-ITEA/2_application/server.go
-             
+             echo
              go run ./Final-Task-ITEA/2_application/server.go
              '''
         }
