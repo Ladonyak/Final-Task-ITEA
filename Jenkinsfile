@@ -51,6 +51,7 @@ pipeline {
              mkdir -p /go/src/github.com
              cd /go/src/github.com
              git clone 'https://github.com/Ladonyak/Final-Task-ITEA.git'
+             ls
              go version
              go run ./2_application/server.go
              '''
