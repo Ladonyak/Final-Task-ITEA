@@ -34,7 +34,7 @@ pipeline {
         }
       }
     }
-
+  }
   stage('Get a Golang project') {
     git url: 'https://github.com/Ladonyak/Final-Task-ITEA.git', branch: 'main'
     container('golang') {
