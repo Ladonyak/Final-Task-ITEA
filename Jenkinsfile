@@ -45,14 +45,16 @@ pipeline {
       }
     }
     stage('Get a Golang project') {
-      container('golang') {
-        stage('Build a Go project') {
-          sh '''
-          mkdir -p /go/src/github.com
-          cd /go/src/github.com
-          git 'https://github.com/Ladonyak/Final-Task-ITEA.git'
-          go ./2_application/server.go
-          '''
+      steps {
+        container('golang') {
+          stage('Build a Go project') {
+             sh '''
+             mkdir -p /go/src/github.com
+             cd /go/src/github.com
+             git 'https://github.com/Ladonyak/Final-Task-ITEA.git'
+             go ./2_application/server.go
+             '''
+          }
         }
       }
     }
