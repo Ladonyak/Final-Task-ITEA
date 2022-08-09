@@ -35,7 +35,7 @@ pipeline {
       }
     }
     stage('Get a Golang project') {
-      git url: 'https://github.com/Ladonyak/Final-Task-ITEA.git', branch: 'main'
+      git 'https://github.com/Ladonyak/Final-Task-ITEA.git'
       container('golang') {
         stage('Build a Go project') {
           sh '''
